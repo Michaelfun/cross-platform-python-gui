@@ -1,0 +1,599 @@
+#:import hex kivy.utils.get_color_from_hex
+#:import platform kivy.platform
+#: import Window kivy.core.window.Window
+
+ScreenManager:
+    Login_page:
+        id: Login
+    Home_Screen:
+        id: home
+    New_Questions_Screen:
+        id: new_question
+    Completed_Question_Screen:
+        id: completed_question
+    Pending_question:
+        id: pending
+
+<Content>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "200dp"
+    MDTextField:
+        id: names
+        color_mode: 'custom'
+        mode: 'rectangle'
+        hint_text: 'User name:'
+        size_hint:None,None
+        width: dp(250)
+        height: dp(10)
+        line_color_focus:hex('#303438')
+        line_color_normal:hex('#303438')
+        font_size:dp(15)
+        pos_hint: {"center_x":.5}
+    MDRaisedButton:
+        md_bg_color: hex('#303438')
+        text:'Save'
+        pos_hint: {"center_x":.5}
+        on_press:
+            app.get_user_info()
+    MDRaisedButton:
+        md_bg_color: hex('#303438')
+        text:'Cancel'
+        pos_hint: {"center_x":.5}
+        on_press:
+            app.close_dialog()
+
+    MDLabel:
+        id: memo
+        pos_hint: {"center_x":.5}
+        halign: 'center'
+        font_name:'fonts/SourceSansPro-Regular.ttf'
+        font_size: dp(15)
+
+
+<Content1>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "300dp"
+    MDTextField:
+        id: group_name
+        color_mode: 'custom'
+        mode: 'rectangle'
+        hint_text: 'Enter group'
+        size_hint:None,None
+        width: dp(250)
+        height: dp(10)
+        line_color_focus:hex('#303438')
+        line_color_normal:hex('#303438')
+        font_size:dp(15)
+        pos_hint: {"center_x":.5,"center_y": .9}
+    MDTextField:
+        id: date_from
+        color_mode: 'custom'
+        mode: 'rectangle'
+        text: 'Start at date'
+        size_hint:None,None
+        width: dp(250)
+        height: dp(10)
+        line_color_focus:hex('#303438')
+        line_color_normal:hex('#303438')
+        font_size:dp(15)
+        pos_hint: {"center_x":.5,"center_y": .6}
+    MDIconButton:
+        icon:'calendar-plus'
+        pos_hint: {"center_x":.67,"center_y": .58}
+        on_press:
+            app.show_date_picker1()
+    MDTextField:
+        id: date_till
+        color_mode: 'custom'
+        mode: 'rectangle'
+        text: 'End at date'
+        size_hint:None,None
+        width: dp(250)
+        height: dp(10)
+        line_color_focus:hex('#303438')
+        line_color_normal:hex('#303438')
+        font_size:dp(15)
+        pos_hint: {"center_x":.5, "center_y": .3}
+    MDIconButton:
+        icon:'calendar-plus'
+        pos_hint: {"center_x":.67,"center_y": .28}
+        on_press:
+            app.show_date_picker2()
+    MDRaisedButton:
+        md_bg_color: hex('#303438')
+        text:'Save'
+        pos_hint: {"center_x":.3,"center_y": .1}
+        on_press:
+            app.report(group_name.text,date_from.text,date_till.text)
+            group_name.text=''
+            date_from.text=''
+            date_till.text=''
+    MDRaisedButton:
+        md_bg_color: hex('#303438')
+        text:'Cancel'
+        pos_hint: {"center_x":.7,"center_y": .1}
+        on_press:
+            app.close_dialog1()
+            group_name.text=''
+            date_from.text=''
+            date_till.text=''
+
+
+<questionCard>:
+    md_bg_color: hex('#DADBEB')
+    padding: dp(15)
+    spacing: dp(5)
+    radius: dp(10)
+    size_hint_y: None
+    height:"255dp" #if Window.width>dp(530) else '480dp'
+    orientation: 'vertical'
+    MDBoxLayout:
+        orientation:'vertical'
+        padding:dp(8)
+        spacing: dp(5)
+        MDLabel:
+            halign:'center'
+            text: root.text
+        MDLabel:
+            id: question_proper
+            text: root.text1
+        MDTextField:
+            id: proper_entry
+            color_mode: 'custom'
+            mode: 'rectangle'
+            hint_text: 'propability'
+            size_hint:None,None
+            width: dp(100)
+            height: dp(10)
+            line_color_focus:hex('#303438')
+            line_color_normal:hex('#303438')
+            font_size:dp(15)
+            #pos_hint:{"center_x":.5}
+        MDRaisedButton:
+            md_bg_color: hex('#303438')
+            text:'save Info'
+            pos_hint: {"center_x":.5}
+            on_press:
+                app.save_properbility_entry(question_proper.text, proper_entry.text)
+                proper_entry.text = ''
+
+<questionCard2>:
+    list:list
+    md_bg_color: hex('#DADBEB')
+    padding: dp(15)
+    spacing: dp(5)
+    radius: dp(10)
+    size_hint_y: None
+    height:"255dp" #if Window.width<dp(530) else '480dp'
+    orientation: 'vertical'
+    MDBoxLayout:
+        orientation:'vertical'
+        padding:dp(8)
+        spacing: dp(5)
+        MDLabel:
+            halign:'center'
+            text: root.text
+        MDLabel:
+            id: question_proper1
+            text: root.text1
+        MDBoxLayout:
+            ScrollView:
+                MDList:
+                    id: list
+
+        MDTextField:
+            id: val
+            color_mode: 'custom'
+            mode: 'rectangle'
+            hint_text: 'Value'
+            size_hint:None,None
+            width: dp(100)
+            height: dp(10)
+            line_color_focus:hex('#303438')
+            line_color_normal:hex('#303438')
+            font_size:dp(15)
+        MDRaisedButton:
+            md_bg_color: hex('#303438')
+            text:'save Info'
+            pos_hint: {"center_x":.5}
+            on_press:
+                app.calculate_brier_score(question_proper1.text, val.text)
+                val.text = ''
+                app.on_start()
+
+<questionCard3>:
+    list:list
+    md_bg_color: hex('#DADBEB')
+    padding: dp(15)
+    spacing: dp(5)
+    radius: dp(10)
+    size_hint_y: None
+    height:"255dp" if Window.width<dp(530) else '480dp'
+    orientation: 'vertical'
+    MDBoxLayout:
+        orientation:'vertical'
+        padding:dp(8)
+        spacing: dp(5)
+        MDLabel:
+            halign:'center'
+            text: root.text
+        MDBoxLayout:
+            ScrollView:
+                MDList:
+                    id: list
+<Login_page>:
+    name: 'login'
+    MDBoxLayout:
+        MDScreen:
+            canvas.before:
+                Color:
+                    rgb: hex('#303438')
+                Rectangle:
+                    size: self.width,self.height
+            MDLabel:
+                text: 'Welcome to Brier Score Calculation'
+                halign:'center'
+                font_name:'fonts/SourceSansPro-Regular.ttf'
+                color: 1,1,1,1
+                pos_hint: {"centter_x":.5, "center_y":.8}
+                font_size: dp(25)
+            MDLabel:
+                text: 'Systeam'
+                halign:'center'
+                font_name:'fonts/SourceSansPro-Regular.ttf'
+                color:1,1,1,1
+                pos_hint: {"centter_x":.5, "center_y":.75}
+                font_size:dp(25)
+
+        MDScreen:
+            MDLabel:
+                id: memo2
+                pos_hint: {"center_y":.7}
+                halign: 'center'
+                font_name:'fonts/SourceSansPro-Regular.ttf'
+                font_size: dp(15)
+            MDTextField:
+                id: user_name
+                color_mode: 'custom'
+                mode: 'rectangle'
+                hint_text: 'username'
+                size_hint:None,None
+                width: dp(250) if Window.width>dp(530) else '100dp'
+                line_color_focus:hex('#303438')
+                line_color_normal:hex('#303438')
+                font_size:dp(15)
+                pos_hint:{"center_x":.5, "center_y":.6}
+            MDRaisedButton:
+                md_bg_color: hex('#303438')
+                text:'Login'
+                pos_hint: {"center_x":.5, "center_y":.5}
+                on_press:
+                    app.login(user_name.text)
+                    user_name.text=''
+                    app.data_roller_over()
+                    app.completed_question()
+
+            MDTextButton:
+                text: 'Register here'
+                font_name:'fonts/SourceSansPro-Regular.ttf'
+                font_size: dp(15)
+                pos_hint: {"center_x":.5, "center_y":.4}
+                on_press:
+                    app.user_registration()
+
+
+<Pending_question>:
+    name: 'pending'
+    question_box:question_box
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: dp(8)
+        MDBoxLayout:
+            orientation: 'vertical'
+            size_hint: 1,.2
+            MDToolbar:
+                md_bg_color:hex('#303438')
+                title: 'Pending Questions'
+                font_name: 'fonts/SourceSansPro-Reqular.ttf'
+                elevation: 10
+                left_action_items:[['upload']]
+            MDBoxLayout:
+                MDLabel:
+                    text: 'Assign True if the question is true and False if the question is false'
+                    font_name: 'fonts/SourceSansPro-Regular.ttf'
+                    halign: 'center'
+                    pos_hint:{'center_x':.5, 'center_y':.5}
+
+        MDBoxLayout:
+            ScrollView:
+                bar_color: app.theme_cls.primary_color
+                bar_width:dp(15) if platform=='win' else dp(0)
+                effect_cls:'ScrollEffect'
+                scroll_type:['bars'] if platform=='win' else ['content']
+                MDBoxLayout:
+                    id: question_box
+                    adaptive_height:True
+                    orientation: 'vertical'
+                    padding:dp(20)
+                    spacing:dp(8)
+
+        MDBoxLayout:
+            size_hint:1,.1
+            orientation: 'vertical'
+            MDRaisedButton:
+                md_bg_color: hex('#303438')
+                text: 'Back'
+                pos_hint:{'center_x':.5, 'center_y':1}
+                on_press:
+                    root.manager.current='Home'
+
+        MDCard:
+            md_bg_color: hex('#303438')
+            size_hint: 1,.08
+            pos_hint: {"center_x":.5,"center_y":.5}
+
+<Home_Screen>:
+    name: "Home"
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint: 1,.3
+            MDToolbar:
+                md_bg_color: hex('#303438')
+                title: 'Home'
+                font_name: 'fonts/SourceSansPro-Regular.ttf'
+                elevation: 10
+                left_action_items:[['home']]
+                right_action_items:[['logout',lambda x:app.log_out()]]
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                MDBoxLayout:
+                    MDScreen:
+                        canvas.before:
+                            Color:
+                                rgb: hex('#303438')
+                            Rectangle:
+                                size: self.width,self.height
+                        MDLabel:
+                            id: today_date
+                            color:1,1,1,1
+                            font_name: 'fonts/SourceSansPro-Regular.ttf'
+                            font_size:dp(17)
+                            halign: 'center'
+                            pos_hint:{'center_x':.2, 'center_y':.9}
+
+                        MDLabel:
+                            id: User
+                            color:1,1,1,1
+                            font_name: 'fonts/SourceSansPro-Regular.ttf'
+                            font_size:dp(17)
+                            halign: 'center'
+                            pos_hint:{'center_x':.8, 'center_y':.9}
+                MDLabel:
+                    text: 'Assign probability value between 0 and 1 for each question'
+                    font_size:dp(23)
+                    font_name: 'fonts/SourceSansPro-Regular.ttf'
+                    halign: 'center'
+                    pos_hint:{'center_x':.5, 'center_y':.2}
+
+        MDBoxLayout:
+            ScrollView:
+                bar_color: app.theme_cls.primary_color
+                bar_width:dp(15) if platform=='win' else dp(0)
+                effect_cls:'ScrollEffect'
+                scroll_type:['bars'] if platform=='win' else ['content']
+                MDBoxLayout:
+                    id: question_box
+                    adaptive_height:True
+                    orientation: 'vertical'
+                    padding:dp(20)
+                    spacing:dp(8)
+
+        MDBoxLayout:
+            size_hint:1,.1
+            MDScreen:
+                id: buttons
+                canvas.before:
+                    Color:
+                        rgb: hex('#303438')
+                    Rectangle:
+                        size: self.width,self.height
+                MDTextButton:
+                    color: 1,1,1,1
+                    text: 'Add questions'
+                    pos_hint:{'center_x':.15, 'center_y':.5}
+                    on_press:
+                        root.manager.current='New-Questions'
+                MDTextButton:
+                    color: 1,1,1,1
+                    text: 'Completed questions'
+                    pos_hint:{'center_x':.4,'center_y':.5}
+                    on_press:
+                        root.manager.current='Compleated-Questions'
+                        app.completed_question()
+                MDTextButton:
+                    id: menu_group
+                    color: 1,1,1,1
+                    text: 'Completed group'
+                    pos_hint:{'center_x':.65,'center_y':.5}
+                    on_press:
+                        app.menu_group()
+                MDTextButton:
+                    color: 1,1,1,1
+                    text: 'Pending questions'
+                    pos_hint:{'center_x':.9,'center_y':.5}
+                    on_press:
+                        app.pending_question()
+
+        MDCard:
+            md_bg_color: hex('#303438')
+            size_hint: 1,.08
+            pos_hint: {"center_x":.5,"center_y":.5}
+
+
+
+
+<New_Questions_Screen>:
+    name: "New-Questions"
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint: 1,.2
+            MDToolbar:
+                md_bg_color: hex('#303438')
+                title: 'Create New Question'
+                font_name: 'fonts/SourceSansPro-Regular.ttf'
+                elevation: 10
+                left_action_items:[['plus']]
+
+            MDBoxLayout:
+                padding: dp(30)
+                MDLabel:
+                    text: 'Add New Question'
+                    font_size: dp(25)
+                    font_name: 'fonts/SourceSansPro-Regular.ttf'
+                    halign: 'center'
+                    pos_hint:{'center_x':.5, 'center_y':.85}
+
+        MDScreen:
+            id:date_screen
+            MDTextField:
+                id: Question
+                color_mode: 'custom'
+                mode: 'rectangle'
+                hint_text: 'Question:'
+                multiline: True
+                size_hint_x:None
+                width: dp(500) if Window.width>dp(530) else '200dp'
+                line_color_focus:hex('#303438')
+                line_color_normal:hex('#303438')
+                font_size:dp(19)
+                pos_hint: {"center_x":.5,"center_y": .8}
+
+            MDTextField:
+                id: Question_group
+                color_mode: 'custom'
+                mode: 'rectangle'
+                hint_text: 'Question group:'
+                multiline: True
+                size_hint_x:None
+                width: dp(500) if Window.width>dp(530) else '200dp'
+                line_color_focus:hex('#303438')
+                line_color_normal:hex('#303438')
+                font_size:dp(19)
+                pos_hint: {"center_x":.5,"center_y": .6}
+
+            MDTextField:
+                id: Due_date
+                color_mode: 'custom'
+                mode: 'rectangle'
+                text: 'Enter due date:'
+                multiline: True
+                size_hint_x:None
+                width: dp(500) if Window.width>dp(530) else '200dp'
+                line_color_focus:hex('#303438')
+                line_color_normal:hex('#303438')
+                font_size:dp(19)
+                pos_hint: {"center_x":.5,"center_y": .4}
+
+            MDIconButton:
+                icon:'calendar-plus'
+                pos_hint: {"center_x":.64,"center_y": .39}
+                on_press:
+                    app.show_date_picker()
+
+            MDRaisedButton:
+                md_bg_color: hex('#303438')
+                text:'save Info'
+                pos_hint: {"center_x":.5,"center_y": .2}
+                on_release:
+                    app.add_new_question(Question.text, Question_group.text, Due_date.text)
+                    Question.text=''
+                    Question_group.text=''
+                    Due_date.text=''
+                    app.on_start()
+
+            MDBoxLayout:
+                size_hint: 1,.5
+                orientation: 'vertical'
+                MDRaisedButton:
+                    md_bg_color: hex('#303438')
+                    text: 'Back'
+                    pos_hint:{'center_x':.5, 'center_y':1}
+                    on_press:
+                        root.manager.current='Home'
+                        Question.text=''
+                        Question_group.text=''
+                        Due_date.text=''
+        MDCard:
+            md_bg_color: hex('#303438')
+            size_hint: 1,.08
+            pos_hint: {"center_x":.5,"center_y":.5}
+
+<Completed_Question_Screen>:
+    name: "Compleated-Questions"
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint: 1,.2
+            MDToolbar:
+                md_bg_color: hex('#303438')
+                title: 'Completed Question'
+                font_name: 'fonts/SourceSansPro-Regular.ttf'
+                elevation: 10
+                left_action_items:[['check']]
+
+            MDBoxLayout:
+                padding: dp(20)
+                MDLabel:
+                    id: completed_group
+                    text: 'List Of Completed Questions'
+                    font_size: dp(23)
+                    font_name: 'fonts/SourceSansPro-Regular.ttf'
+                    halign: 'center'
+                    pos_hint:{'center_x':.5, 'center_y':.9}
+        MDBoxLayout:
+            ScrollView:
+                bar_color: app.theme_cls.primary_color
+                bar_width:dp(15) if platform=='win' else dp(0)
+                effect_cls:'ScrollEffect'
+                scroll_type:['bars'] if platform=='win' else ['content']
+                MDList:
+                    id: completed
+        MDBoxLayout:
+            size_hint: 1,.1
+            padding: dp(20)
+            MDScreen:
+                MDRaisedButton:
+                    md_bg_color: hex('#303438')
+                    text: 'Back'
+                    pos_hint:{'center_x':.2,'center_y':.2}
+                    on_press:
+                        root.manager.current='Home'
+
+                MDRaisedButton:
+                    md_bg_color: hex('#303438')
+                    text: 'Report'
+                    pos_hint:{'center_x':.5,'center_y':.2}
+                    on_press:
+                        app.report_generating()
+
+                MDLabel:
+                    id: agrgate
+                    halign: 'center'
+                    font_name: 'fonts/SourceSansPro-Regular.ttf'
+                    pos_hint:{'center_x':.8, 'center_y':.2}
+
+
+        MDCard:
+            md_bg_color: hex('#303438')
+            size_hint: 1,.02
+            pos_hint: {"center_x":.5,"center_y":.5}
