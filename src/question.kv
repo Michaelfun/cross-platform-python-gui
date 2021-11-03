@@ -48,7 +48,7 @@ ScreenManager:
         id: memo
         pos_hint: {"center_x":.5}
         halign: 'center'
-        font_name:'fonts/SourceSansPro-Regular.ttf'
+        font_name:'SourceSansPro-Regular.ttf'
         font_size: dp(15)
 
 
@@ -129,7 +129,7 @@ ScreenManager:
     spacing: dp(5)
     radius: dp(10)
     size_hint_y: None
-    height:"255dp" #if Window.width>dp(530) else '480dp'
+    height:"255dp"
     orientation: 'vertical'
     MDBoxLayout:
         orientation:'vertical'
@@ -237,14 +237,14 @@ ScreenManager:
             MDLabel:
                 text: 'Welcome to Brier Score Calculation'
                 halign:'center'
-                font_name:'fonts/SourceSansPro-Regular.ttf'
+                font_name:'SourceSansPro-Regular.ttf'
                 color: 1,1,1,1
                 pos_hint: {"centter_x":.5, "center_y":.8}
                 font_size: dp(25)
             MDLabel:
                 text: 'Systeam'
                 halign:'center'
-                font_name:'fonts/SourceSansPro-Regular.ttf'
+                font_name:'SourceSansPro-Regular.ttf'
                 color:1,1,1,1
                 pos_hint: {"centter_x":.5, "center_y":.75}
                 font_size:dp(25)
@@ -254,7 +254,7 @@ ScreenManager:
                 id: memo2
                 pos_hint: {"center_y":.7}
                 halign: 'center'
-                font_name:'fonts/SourceSansPro-Regular.ttf'
+                font_name:'SourceSansPro-Regular.ttf'
                 font_size: dp(15)
             MDTextField:
                 id: user_name
@@ -279,7 +279,7 @@ ScreenManager:
 
             MDTextButton:
                 text: 'Register here'
-                font_name:'fonts/SourceSansPro-Regular.ttf'
+                font_name:'SourceSansPro-Regular.ttf'
                 font_size: dp(15)
                 pos_hint: {"center_x":.5, "center_y":.4}
                 on_press:
@@ -298,13 +298,13 @@ ScreenManager:
             MDToolbar:
                 md_bg_color:hex('#303438')
                 title: 'Pending Questions'
-                font_name: 'fonts/SourceSansPro-Reqular.ttf'
+                font_name: 'SourceSansPro-Reqular.ttf'
                 elevation: 10
                 left_action_items:[['upload']]
             MDBoxLayout:
                 MDLabel:
                     text: 'Assign True if the question is true and False if the question is false'
-                    font_name: 'fonts/SourceSansPro-Regular.ttf'
+                    font_name: 'SourceSansPro-Regular.ttf'
                     halign: 'center'
                     pos_hint:{'center_x':.5, 'center_y':.5}
 
@@ -346,7 +346,7 @@ ScreenManager:
             MDToolbar:
                 md_bg_color: hex('#303438')
                 title: 'Home'
-                font_name: 'fonts/SourceSansPro-Regular.ttf'
+                font_name: 'SourceSansPro-Regular.ttf'
                 elevation: 10
                 left_action_items:[['home']]
                 right_action_items:[['logout',lambda x:app.log_out()]]
@@ -363,7 +363,7 @@ ScreenManager:
                         MDLabel:
                             id: today_date
                             color:1,1,1,1
-                            font_name: 'fonts/SourceSansPro-Regular.ttf'
+                            font_name: 'SourceSansPro-Regular.ttf'
                             font_size:dp(17)
                             halign: 'center'
                             pos_hint:{'center_x':.2, 'center_y':.9}
@@ -371,14 +371,14 @@ ScreenManager:
                         MDLabel:
                             id: User
                             color:1,1,1,1
-                            font_name: 'fonts/SourceSansPro-Regular.ttf'
+                            font_name: 'SourceSansPro-Regular.ttf'
                             font_size:dp(17)
                             halign: 'center'
                             pos_hint:{'center_x':.8, 'center_y':.9}
                 MDLabel:
                     text: 'Assign probability value between 0 and 1 for each question'
                     font_size:dp(23)
-                    font_name: 'fonts/SourceSansPro-Regular.ttf'
+                    font_name: 'SourceSansPro-Regular.ttf'
                     halign: 'center'
                     pos_hint:{'center_x':.5, 'center_y':.2}
 
@@ -449,7 +449,7 @@ ScreenManager:
             MDToolbar:
                 md_bg_color: hex('#303438')
                 title: 'Create New Question'
-                font_name: 'fonts/SourceSansPro-Regular.ttf'
+                font_name: 'SourceSansPro-Regular.ttf'
                 elevation: 10
                 left_action_items:[['plus']]
 
@@ -458,7 +458,7 @@ ScreenManager:
                 MDLabel:
                     text: 'Add New Question'
                     font_size: dp(25)
-                    font_name: 'fonts/SourceSansPro-Regular.ttf'
+                    font_name: 'SourceSansPro-Regular.ttf'
                     halign: 'center'
                     pos_hint:{'center_x':.5, 'center_y':.85}
 
@@ -547,7 +547,7 @@ ScreenManager:
             MDToolbar:
                 md_bg_color: hex('#303438')
                 title: 'Completed Question'
-                font_name: 'fonts/SourceSansPro-Regular.ttf'
+                font_name: 'SourceSansPro-Regular.ttf'
                 elevation: 10
                 left_action_items:[['check']]
 
@@ -557,7 +557,7 @@ ScreenManager:
                     id: completed_group
                     text: 'List Of Completed Questions'
                     font_size: dp(23)
-                    font_name: 'fonts/SourceSansPro-Regular.ttf'
+                    font_name: 'SourceSansPro-Regular.ttf'
                     halign: 'center'
                     pos_hint:{'center_x':.5, 'center_y':.9}
         MDBoxLayout:
@@ -589,7 +589,7 @@ ScreenManager:
                 MDLabel:
                     id: agrgate
                     halign: 'center'
-                    font_name: 'fonts/SourceSansPro-Regular.ttf'
+                    font_name: 'SourceSansPro-Regular.ttf'
                     pos_hint:{'center_x':.8, 'center_y':.2}
 
 
