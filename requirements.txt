@@ -1,1 +1,6 @@
 kivy
+kivymd
+fpdf
+sqlite3
+datetime 
+sys
