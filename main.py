@@ -1,9 +1,12 @@
 import os, sys
+if platform.system() == 'Linux':
+    os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
 import math
 import sqlite3
 from datetime import date, datetime, timedelta
 
 from fpdf import FPDF
+kivy.require('2.0.0')
 from kivy.resources import resource_add_path, resource_find
 from kivy.properties import StringProperty
 from kivy.uix.boxlayout import BoxLayout
